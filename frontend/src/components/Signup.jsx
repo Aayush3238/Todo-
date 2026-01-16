@@ -2,6 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
+import {API_BASE} from "../config";
 
 export default function Signup() {
   const [username, setUsername] = useState('');
@@ -14,7 +15,7 @@ export default function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:4001/user/sign-up", { username, email, password });
+      const response = await axios.post(`${API_BASE}/user/sign-up`, { username, email, password });
       if (response.status === 200 || response.status === 201) {
         navigate('/login');
         setUsername('');

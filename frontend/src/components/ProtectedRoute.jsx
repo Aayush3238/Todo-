@@ -2,10 +2,11 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import {API_BASE} from "../config";
 
 function Home() {
   const [todos, setTodos] = useState([]);
-  const [error, setError] = useState(""); // ✅ always string
+  const [error, setError] = useState(""); 
   const [loading, setLoading] = useState(false);
   const [newTodo, setNewTodo] = useState("");
 
@@ -27,7 +28,7 @@ function Home() {
         setLoading(true);
 
         const response = await axios.get(
-          "http://localhost:4001/todo/fetch",
+          `${API_BASE}/todo/fetch`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -54,7 +55,7 @@ function Home() {
       if (!newTodo.trim()) return;
 
       const response = await axios.post(
-        "http://localhost:4001/todo/create",
+        `${API_BASE}/todo/create`,
         { text: newTodo },
         {
           headers: {
@@ -77,7 +78,7 @@ function Home() {
       if (!todo) return;
 
       const response = await axios.put(
-        `http://localhost:4001/todo/update/${id}`,
+        `${API_BASE}/todo/update/${id}`,
         { ...todo, isComplete: !todo.isComplete },
         {
           headers: {
@@ -96,7 +97,7 @@ function Home() {
   const deleteTodo = async (id) => {
     try {
       await axios.delete(
-        `http://localhost:4001/todo/delete/${id}`,
+        `${API_BASE}/todo/delete/${id}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -117,7 +118,7 @@ function Home() {
       if (!todo || !editedTodoText.trim()) return;
 
       const response = await axios.put(
-        `http://localhost:4001/todo/update/${id}`,
+        `${API_BASE}/todo/update/${id}`,
         { ...todo, text: editedTodoText },
         {
           headers: {
