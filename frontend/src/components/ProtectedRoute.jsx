@@ -19,7 +19,10 @@ function Home() {
       try {
         const token = localStorage.getItem("token");
 
-
+        if (!token) {
+          navigate("/login", { replace: true });
+          return;
+        }
 
         setLoading(true);
 
